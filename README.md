@@ -1,4 +1,4 @@
-# dotai 🤖
+# dot.ai 🤖
 
 A collection of personal AI customizations, skills, prompts, and packages for the [pi](https://github.com/earendil-works/pi-coding-agent) coding agent.
 
