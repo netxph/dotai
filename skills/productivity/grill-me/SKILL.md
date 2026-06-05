@@ -7,18 +7,7 @@ description: Asks the agent to grill you on a specific topic to check understand
 
 Ask the agent to grill you on a specific topic.
 
-> [!TIP]
-> Original creator: [Matt Pocock](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md)
-
----
-
-Ask the agent to grill you on a specific topic.
-
-This is great for:
-
-1. Preparing for interviews.
-2. Checking your understanding of a topic.
-3. Learning something new.
+Credit: Inspired by [Matt Pocock](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).
 
 ## Prompt
 
