@@ -1,0 +1,46 @@
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.netrw*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+env/
+venv/
+.python-version
+
+# Agent-specific
+.pi/
+.pi-packages/
+.cursor/
+.windsurf/
+.continue/
+.aider/
+.gpt-pilot/
+.supermaven/
+.codium/
+.pearai/
+.agent/
+.cline/
+.roo/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
