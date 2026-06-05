@@ -1,0 +1,18 @@
+{
+  "name": "dotai",
+  "version": "1.0.0",
+  "description": "Personal AI customization collection for daily work",
+  "keywords": [
+    "pi-package"
+  ],
+  "author": "netxph",
+  "license": "MIT",
+  "pi": {
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ]
+  }
+}
