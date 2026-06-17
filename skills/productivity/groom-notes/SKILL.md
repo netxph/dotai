@@ -69,19 +69,24 @@ Ensure files live in their correct domains:
   ```yaml
   ---
   version: "1.0"
+  up: "[[000 <folder name>]]"
   tags:
     - gitops
     - platform-engineering
   ---
   ```
+- `up` must point to the corresponding folder MOC using the folder name:
+  - Example: notes under `Atlas/Technologies/` use `up: "[[000 Technologies]]"`.
 - If frontmatter/properties are missing, add them.
   - Start by generating `tags` from note content/keywords (auto-generated tags).
-  - Then add other standard properties (e.g., `version`) using safe defaults.
+  - Then add other standard properties (e.g., `version`, `up`) using safe defaults.
 
 ### 5. Atlas MOC Maintenance (Conditional)
 - Apply this rule **only when the resolved scope includes `Atlas/` files**.
 - For Atlas notes in-scope, create/update/fix Maps of Content (MOCs):
   - ensure major topics have an MOC note,
+  - use this MOC naming convention: `000 <folder name>.md`,
+  - ensure notes in that folder set `up` to the matching MOC (`[[000 <folder name>]]`),
   - ensure MOCs contain curated links to relevant Atlas/Effort/Calendar notes as applicable,
   - repair stale/broken MOC links,
   - add brief context under each MOC link where helpful.
@@ -96,6 +101,7 @@ Ensure files live in their correct domains:
 - If a note contains inline references/wiki-links to other notes, append a footer section:
   - `## References`
   - Summarize linked notes as bullets with short context.
+  - **Exclude MOC files from this section** (e.g., notes named `000 <folder name>` or other Maps of Content).
 
 ---
 
@@ -117,14 +123,18 @@ When `/skill:groom-notes` or `/groom` is executed:
 5. **Validate YAML Frontmatter**
    - Fix tag syntax and normalize in-scope frontmatter.
    - Add missing properties/frontmatter, starting with auto-generated tags.
+   - Ensure `up` links each note to its folder MOC (`[[000 <folder name>]]`).
 6. **Create/Update/Fix Atlas MOCs (Conditional)**
    - Run this step only if the resolved scope includes files under `Atlas/`.
    - Create missing MOCs, update weak/outdated MOCs, and fix broken links in Atlas MOCs.
+   - Use the naming convention `000 <folder name>.md` for MOCs.
+   - Ensure each in-scope note links to the corresponding folder MOC via `up`.
    - Skip entirely when no `Atlas/` files are in scope.
 7. **Fix Markdown Formatting**
    - Normalize heading/list/code-fence formatting in-scope.
 8. **Add References Footer**
    - If in-note links/references exist, append `## References` with concise link summaries.
+   - Do not include MOC files in `## References` entries.
 9. **Remove Redundant Titles**
    - Remove filename-duplicate H1 headings in-scope.
 10. **Confirm & Execute**
