@@ -19,6 +19,7 @@ To save tokens and increase speed, follow these principles for both input interp
 
 ## Technical Constraints
 - Always check if a tool/command is available before assuming.
+- Python is available via `uv` (use `uv run python ...` when needed).
 - Use absolute paths when there is ambiguity.
 - If a command fails in Git Bash, retry using PowerShell.
 
