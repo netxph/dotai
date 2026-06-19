@@ -5,9 +5,12 @@ if (-not (Get-Command pi -ErrorAction SilentlyContinue)) {
   throw 'pi not found in PATH'
 }
 
+if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
+  throw 'uv not found in PATH'
+}
+
 $packages = @(
   'npm:pi-openplan',
-  'npm:pi-powershell',
   'npm:pi-lmstudio',
   'npm:pi-web-access',
   'git:github.com/DietrichGebert/ponytail'
@@ -24,5 +27,11 @@ foreach ($pkg in $packages) {
     pi install $pkg
   }
 }
+
+Write-Host 'install graphify cli'
+uv tool install graphifyy
+
+Write-Host 'install graphify'
+graphify install --platform pi
 
 Write-Host 'done'

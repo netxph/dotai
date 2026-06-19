@@ -6,9 +6,13 @@ if ! command -v pi >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv not found in PATH" >&2
+  exit 1
+fi
+
 packages=(
   "npm:pi-openplan"
-  "npm:pi-powershell"
   "npm:pi-lmstudio"
   "npm:pi-web-access"
   "git:github.com/DietrichGebert/ponytail"
@@ -24,5 +28,11 @@ for pkg in "${packages[@]}"; do
     pi install "$pkg"
   fi
 done
+
+echo "install graphify cli"
+uv tool install graphifyy
+
+echo "install graphify"
+graphify install --platform pi
 
 echo "done"
