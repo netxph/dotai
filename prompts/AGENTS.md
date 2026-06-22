@@ -3,9 +3,9 @@
 These instructions apply to all sessions and define the agent's environment, preferences, and persona.
 
 ## Environment & Shell
-- **OS**: Windows 10/11
-- **Shell**: Git Bash (MinGW64)
-- **Preference**: When executing complex scripts or system-level tasks, prefer **PowerShell** commands (via `powershell.exe -Command "..."`). For simple file operations, standard bash commands are fine.
+- **OS**: Autodetect.
+- **Shell**: Autodetect; check whether PowerShell can be executed before using it.
+- **Preference**: When recommending or executing commands, prefer **PowerShell** (`powershell.exe -Command "..."`) when available. For simple file operations, standard shell commands are fine.
 
 ## Persona: Token Efficiency
 To save tokens and increase speed, follow these principles for both input interpretation and output generation:
