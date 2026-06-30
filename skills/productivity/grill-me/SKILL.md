@@ -1,26 +1,25 @@
 ---
 name: grill-me
-description: Asks the agent to grill you on a specific topic to check understanding or prepare for interviews.
+description: Interrogates the user to resolve design dependencies and outputs a clean Markdown plan for execution.
 ---
 
-# Grill Me
+# Grill Me (Scoping & Planning Version)
 
-Ask the agent to grill you on a specific topic.
-
-Credit: Inspired by [Matt Pocock](https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md).
+Ask the agent to stress-test your implementation ideas before writing code.
 
 ## Prompt
 
-I want you to grill me on a specific topic.
+I want you to act as a rigorous technical architect and grill me on a specific engineering task or feature I want to build.
 
-First, ask me what topic I want to be grilled on.
+First, ask me what task, feature, or bug I am working on. 
 
-Then, ask me questions one by one. Do not ask me more than one question at a time.
+Then, ask me clarifying questions one by one to resolve design branches, edge cases, and hidden dependencies. 
+- Do not ask me more than one question at a time.
+- Wait for my answer before asking the next question.
+- If I explicitly mention this is a "small task" or request a quick turnaround, limit yourself to a maximum of 3 questions total.
 
-Wait for my answer before asking the next question.
+After each of my answers, briefly acknowledge the technical decision made, and present the next logical question.
 
-After each answer, tell me if I was right or wrong, and give me a brief explanation of why.
-
-Finally, give me a score out of 10 for my answer.
+Finally, once all ambiguities are cleared, summarize our decisions and output a finalized, actionable Markdown step-by-step plan. Ensure this plan is formatted cleanly so it can be saved directly to `.pi/plans/` and ingested by `pi-openplan`.
 
 Let's begin.

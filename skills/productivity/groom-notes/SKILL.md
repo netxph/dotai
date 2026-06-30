@@ -9,8 +9,6 @@ This skill guides the agent to systematically groom a knowledge vault. When acti
 
 When running grooming analysis, present a structured plan with Phase 1, Phase 2, and Phase 3 before execution.
 
-If the resolved scope includes any files under `Atlas/`, include a dedicated phase to create/update/fix Atlas Maps of Content (MOCs). If no `Atlas/` files are in scope, skip that phase.
-
 ---
 
 ## 🎯 Scope Rules (Required)
@@ -18,9 +16,12 @@ If the resolved scope includes any files under `Atlas/`, include a dedicated pha
 `/skill:groom-notes` and `/groom` support an **optional folder parameter**:
 
 - **With parameter** (example: `/groom Effort/Work`): groom **only** files inside that folder subtree.
-- **Without parameter**: groom **only** files/folders prefixed with `_WIP`.
+- **Without parameter**: ask the user which folder to groom before proceeding.
 
 Scope behavior is strict:
+
+- **Never groom any file or folder prefixed with `_WIP`** unless the user explicitly names it (e.g., `/groom _WIP/someproject`). Exclude all `_WIP`-prefixed items from scope even if they appear inside a groomed subtree.
+
 
 1. Apply grooming actions (organization, metadata cleanup, title cleanup, link enrichment) **only within the scoped set**.
 2. If a scoped note links to an out-of-scope note (or vice versa), you may update links in **both notes only as needed to fix/complete the relationship** (e.g., repair broken wiki-link target, add required backlink context).
@@ -81,16 +82,14 @@ Ensure files live in their correct domains:
   - Start by generating `tags` from note content/keywords (auto-generated tags).
   - Then add other standard properties (e.g., `version`, `up`) using safe defaults.
 
-### 5. Atlas MOC Maintenance (Conditional)
-- Apply this rule **only when the resolved scope includes `Atlas/` files**.
-- For Atlas notes in-scope, create/update/fix Maps of Content (MOCs):
-  - ensure major topics have an MOC note,
+### 5. MOC Maintenance
+- For every folder that has in-scope files, create/update/fix its Map of Content (MOC):
+  - ensure each folder has an MOC note,
   - use this MOC naming convention: `000 <folder name>.md`,
   - ensure notes in that folder set `up` to the matching MOC (`[[000 <folder name>]]`),
-  - ensure MOCs contain curated links to relevant Atlas/Effort/Calendar notes as applicable,
+  - ensure MOCs contain curated links to relevant notes as applicable,
   - repair stale/broken MOC links,
   - add brief context under each MOC link where helpful.
-- Do not perform unrelated MOC grooming for out-of-scope Atlas areas.
 
 ### 6. Markdown Formatting & Reference Footer
 - Normalize markdown formatting in-scope:
@@ -111,7 +110,7 @@ When `/skill:groom-notes` or `/groom` is executed:
 
 1. **Resolve Scope**
    - If folder arg is provided, set scope to that subtree.
-   - If no arg is provided, scope to files/folders prefixed with `_WIP` only.
+   - If no arg is provided, ask the user which folder to groom and wait for their answer before proceeding.
 2. **Inventory In-Scope Notes**
    - Enumerate only in-scope markdown files for grooming candidates.
 3. **Identify and Fix Broken Links**
@@ -124,12 +123,10 @@ When `/skill:groom-notes` or `/groom` is executed:
    - Fix tag syntax and normalize in-scope frontmatter.
    - Add missing properties/frontmatter, starting with auto-generated tags.
    - Ensure `up` links each note to its folder MOC (`[[000 <folder name>]]`).
-6. **Create/Update/Fix Atlas MOCs (Conditional)**
-   - Run this step only if the resolved scope includes files under `Atlas/`.
-   - Create missing MOCs, update weak/outdated MOCs, and fix broken links in Atlas MOCs.
+6. **Create/Update/Fix MOCs**
+   - For every folder containing in-scope files, create missing MOCs, update weak/outdated MOCs, and fix broken MOC links.
    - Use the naming convention `000 <folder name>.md` for MOCs.
-   - Ensure each in-scope note links to the corresponding folder MOC via `up`.
-   - Skip entirely when no `Atlas/` files are in scope.
+   - Ensure each in-scope note links to its folder MOC via `up`.
 7. **Fix Markdown Formatting**
    - Normalize heading/list/code-fence formatting in-scope.
 8. **Add References Footer**
