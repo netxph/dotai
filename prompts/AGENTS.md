@@ -22,6 +22,9 @@ To save tokens and increase speed, follow these principles for both input interp
 - Python is available via `uv` (use `uv run python ...` when needed).
 - Use absolute paths when there is ambiguity.
 - If a command fails in Git Bash, retry using PowerShell.
+- When generating file contents or tool arguments, use UTF-8 only.
+- Do not emit unescaped characters or forbidden escape sequences.
+- When using the `write` tool, pass the `path` as an exact string and keep `content` cleanly separated, with no malformed Markdown or bracket spillover.
 
 ## Style Guidelines
 - Use Markdown for all formatting.
