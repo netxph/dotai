@@ -21,9 +21,10 @@ When running grooming analysis, present a structured plan with Phase 1, Phase 2,
 Scope behavior is strict:
 
 - **Never groom any file or folder prefixed with `_WIP`** unless the user explicitly names it (e.g., `/groom _WIP/someproject`). Exclude all `_WIP`-prefixed items from scope even if they appear inside a groomed subtree.
+- **Default recency filter:** unless the user explicitly asks for a **full scan**, **all files**, or equivalent wording, only process markdown files whose last-modified time is within the last **10 days**.
+- If the filtered set is empty, report that no recently changed notes were found and ask whether to run a full scan instead.
 
-
-1. Apply grooming actions (organization, metadata cleanup, title cleanup, link enrichment) **only within the scoped set**.
+1. Apply grooming actions (organization, metadata cleanup, title cleanup, link enrichment) **only within the scoped set after the default 10-day recency filter is applied**.
 2. If a scoped note links to an out-of-scope note (or vice versa), you may update links in **both notes only as needed to fix/complete the relationship** (e.g., repair broken wiki-link target, add required backlink context).
 3. Do **not** perform unrelated grooming on out-of-scope notes.
 
@@ -111,8 +112,10 @@ When `/skill:groom-notes` or `/groom` is executed:
 1. **Resolve Scope**
    - If folder arg is provided, set scope to that subtree.
    - If no arg is provided, ask the user which folder to groom and wait for their answer before proceeding.
+   - Unless the user explicitly requests a **full scan**, apply a default recency filter of **last 10 days modified** to markdown files in scope.
 2. **Inventory In-Scope Notes**
    - Enumerate only in-scope markdown files for grooming candidates.
+   - By default, inventory only files changed in the last 10 days; include older files only when the user explicitly asks for a full scan.
 3. **Identify and Fix Broken Links**
    - Prioritize broken wiki-links originating in scope.
    - Create missing files when needed.
