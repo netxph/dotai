@@ -16,12 +16,13 @@ When running grooming analysis, present a structured plan with Phase 1, Phase 2,
 `/skill:groom-notes` and `/groom` support an **optional folder parameter**:
 
 - **With parameter** (example: `/groom Effort/Work`): groom **only** files inside that folder subtree.
-- **Without parameter**: ask the user which folder to groom before proceeding.
+- **Without parameter**: groom markdown files updated anywhere in the vault within the last **10 days**.
 
 Scope behavior is strict:
 
-- **Never groom any file or folder prefixed with `_WIP`** unless the user explicitly names it (e.g., `/groom _WIP/someproject`). Exclude all `_WIP`-prefixed items from scope even if they appear inside a groomed subtree.
-- **Default recency filter:** unless the user explicitly asks for a **full scan**, **all files**, or equivalent wording, only process markdown files whose last-modified time is within the last **10 days**.
+- **Never groom any file or folder prefixed with `_WIP`** unless the user explicitly names it (e.g., `/groom _WIP/someproject`). Exclude all `_WIP`-prefixed items from scope even if they appear inside a groomed subtree, and also exclude anything nested under any `_WIP*` directory during vault-wide grooming.
+- **Default recency filter:** unless the user explicitly asks for a **full scan**, **all files**, or equivalent wording, only process markdown files updated within the last **10 days**.
+- **Use Git to determine recency/scope by default**: prefer Git history and working-tree state (for example, recent paths from `git log --since='10 days ago' --name-only` plus current changed files from `git diff --name-only`) instead of filesystem modified timestamps.
 - If the filtered set is empty, report that no recently changed notes were found and ask whether to run a full scan instead.
 
 1. Apply grooming actions (organization, metadata cleanup, title cleanup, link enrichment) **only within the scoped set after the default 10-day recency filter is applied**.
@@ -111,11 +112,12 @@ When `/skill:groom-notes` or `/groom` is executed:
 
 1. **Resolve Scope**
    - If folder arg is provided, set scope to that subtree.
-   - If no arg is provided, ask the user which folder to groom and wait for their answer before proceeding.
-   - Unless the user explicitly requests a **full scan**, apply a default recency filter of **last 10 days modified** to markdown files in scope.
+   - If no arg is provided, set scope to the whole vault, then limit candidates to markdown files updated within the last **10 days**.
+   - Unless the user explicitly requests a **full scan**, apply the default **10-day** recency filter using **Git-based file discovery** rather than filesystem modified timestamps.
+   - Always exclude `_WIP*` files/folders unless the user explicitly names that `_WIP*` path.
 2. **Inventory In-Scope Notes**
    - Enumerate only in-scope markdown files for grooming candidates.
-   - By default, inventory only files changed in the last 10 days; include older files only when the user explicitly asks for a full scan.
+   - By default, inventory only files changed in the last 10 days according to Git history / working-tree state; include older files only when the user explicitly asks for a full scan.
 3. **Identify and Fix Broken Links**
    - Prioritize broken wiki-links originating in scope.
    - Create missing files when needed.
