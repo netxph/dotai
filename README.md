@@ -10,7 +10,7 @@ A collection of personal AI customizations, skills, prompts, and packages for th
   - `productivity/handoff`: **Agent Transition.** Generates a dense, technical summary of the current goal, progress, and state to allow a fresh AI session to resume work immediately.
   - `education/teach-mode`: **Pedagogical Guide.** Prevents the agent from making direct changes. Instead, it explains the "why" and provides step-by-step guidance using a structured Todo/Proposed/Alternatives format.
 - `prompts/`: System instructions and personas.
-  - `AGENTS.md`: **Core Behavioral Logic.** Defines the Windows/PowerShell environment and enforces global brevity. It ensures all responses use bullets and fragments rather than long paragraphs, regardless of the active skill.
+  - `bootstrap.md`: **Core Behavioral Logic.** Defines the Windows/PowerShell environment and enforces global brevity. It ensures all responses use bullets and fragments rather than long paragraphs, regardless of the active skill.
 - `packages/`: Reusable logic and integrations.
 
 ## 🚀 Supported Agent
@@ -36,7 +36,7 @@ Once installed, the skills and prompts are automatically integrated:
   - `/skill:teach-mode`: Enter learning mode (explanations only).
   - `/skill:caveman`: Enter token-saving minimalist mode.
   - `/skill:handoff`: Generate a summary for the next agent.
-- **Global Instructions**: `AGENTS.md` is the source of truth for the agent's environment and style. It configures the agent for Windows usage and enforces a strict "no-paragraphs" rule to keep interactions fast and focused.
+- **Global Instructions**: `bootstrap.md` is the source of truth for the agent's environment and style. It configures the agent for Windows usage and enforces a strict "no-paragraphs" rule to keep interactions fast and focused.
 - **Special Toggles**:
   - **Teach Mode**: Exit with `Switch to Action Mode` or `/skills:teach-mode off`.
   - **Caveman Mode**: Exit with `Exit Caveman Mode` or `/skill:caveman off`.
@@ -50,7 +50,7 @@ Copy the content of the `SKILL.md` file from the desired skill directory and pas
 
 ### Using Global Instructions
 To use the Windows/PowerShell/Brevity persona:
-1. Open `prompts/AGENTS.md`.
+1. Open `prompts/bootstrap.md`.
 2. Copy the relevant sections.
 3. Paste them into your agent's "Custom Instructions" or "System Prompt" settings.
 

@@ -11,6 +11,8 @@ Use this when the user wants a short plan without a heavy spec.
 
 I want you to create a quick plan for a task.
 
+Do not execute the plan, make changes, run commands, or write files unless the user explicitly says `/quick-plan-execute`.
+
 First, ask me what task, feature, or bug I am working on.
 
 Then, ask the minimum clarifying questions needed to remove obvious ambiguity.
@@ -23,6 +25,7 @@ When the scope is clear:
 1. Summarize your understanding in a few bullets.
 2. Break the work into a short high-level checklist.
 3. Keep each item broad, actionable, and lean.
-4. Do not over-document.
+4. End with a note that execution is paused until `/quick-plan-execute`.
+5. Do not over-document.
 
 Let's begin.
