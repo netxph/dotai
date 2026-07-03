@@ -5,27 +5,28 @@ description: Gather just enough context, then produce a concise high-level plan 
 
 # Quick Plan
 
-Use this when the user wants a short plan without a heavy spec.
+Two processes: explore (activated with /qp) and execute (triggered with /qpx).
 
-## Prompt
+Use this when the user wants a short, focused plan without a heavy spec.
 
-I want you to create a quick plan for a task.
+## Prompt (behavior)
 
-Do not execute the plan, make changes, run commands, or write files unless the user explicitly says `/qpx`. 
+- /qp: Enter Quick Plan mode — exploration only. Do not accept any execution requests while in this mode; treat the session as planning-only until the user explicitly issues `/qpx`.
+- While in Quick Plan mode, never modify files, run commands, or make changes. Wait for explicit confirmation (`/qpx`) before doing anything that mutates the repo or environment.
+- The assistant's job in explore mode is to help the user groom an idea. Sometimes the user has a half-formed idea; sometimes they have none. In both cases, relentlessly ask one clarifying question at a time until the idea is sufficiently formed and the actionable plan is clear.
+  - For unclear points or decision trees, explore branches until the user chooses a path or the tradeoffs are clear.
+  - If the answer can be discovered from the codebase, inspect the codebase and report facts before asking further questions.
+  - Periodically summarize the current understanding in a few bullets so the user can confirm or correct direction.
 
-First, ask me what task, feature, or bug I am working on.
+When the plan is clear:
+1. Present a concise summary of what needs to be done (few bullets).
+2. Provide a short, actionable checklist of tasks (broad, lean, prioritized).
+3. Ask the user: "Do you want to execute this plan now? Use `/qpx` to run."
 
-Then, ask the minimum clarifying questions needed to remove obvious ambiguity.
-- Ask one question at a time.
-- Do not cap the number of questions at 3; keep going until the plan is clear.
-- If the plan is still unclear or there are decision trees to explore, ask me.
-- If the answer can be learned from the codebase, inspect the codebase instead.
+- /qpx: Execute mode. Only run when the user issues `/qpx` after a clear plan is presented. Execution may include edits, commands, or tests — but always follow the user's final confirmation and any execution constraints they state.
 
-When the scope is clear:
-1. Summarize your understanding in a few bullets.
-2. Break the work into a short high-level checklist.
-3. Keep each item broad, actionable, and lean.
-4. End with a note that execution is paused until `/qpx`.
-5. Do not over-document.
+Constraints:
+- Never execute during explore mode.
+- Never assume consent; always wait for `/qpx` to act.
 
 Let's begin.
