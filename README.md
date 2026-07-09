@@ -1,58 +1,94 @@
 # dot.ai 🤖
 
-A collection of personal AI customizations, skills, prompts, and packages for the [pi](https://github.com/earendil-works/pi-coding-agent) coding agent.
-
-## 📁 Repository Structure
-
-- `skills/`: Custom tool definitions and executable skills.
-  - `productivity/grill-me`: **Knowledge Auditor.** Forces the agent to interview you on a specific topic. Asks one question at a time, evaluates answers, and provides a final score.
-  - `productivity/caveman`: **Minimalist Persona.** Strips away grammar, articles, and politeness to minimize token usage and maximize response speed. Use `/skill:caveman` to activate.
-  - `productivity/handoff`: **Agent Transition.** Generates a dense, technical summary of the current goal, progress, and state to allow a fresh AI session to resume work immediately.
-  - `education/teach-mode`: **Pedagogical Guide.** Prevents the agent from making direct changes. Instead, it explains the "why" and provides step-by-step guidance using a structured Todo/Proposed/Alternatives format.
-- `prompts/`: System instructions and personas.
-  - `bootstrap.md`: **Core Behavioral Logic.** Defines the Windows/PowerShell environment and enforces global brevity. It ensures all responses use bullets and fragments rather than long paragraphs, regardless of the active skill.
-- `packages/`: Reusable logic and integrations.
+Personal Pi package with opinionated skills, prompts, and extension setup for daily coding-agent work.
 
 ## 🚀 Supported Agent
 
-This repository is optimized for **Pi**: The coding agent harness and TUI.
+Optimized for **[Pi](https://github.com/earendil-works/pi-coding-agent)**.
 
-## 🛠️ Usage
-
-The easiest way to use this collection is to install it as a Pi package.
+## 📦 Install This Package
 
 ```bash
-# Install directly from GitHub
+# from GitHub
 pi install git:github.com/netxph/dotai
 
-# Or install locally from a cloned directory
+# or from local clone
 pi install .
 ```
 
-Once installed, the skills and prompts are automatically integrated:
+## 🔧 Install Extensions + Executables (recommended)
 
-- **Skills**: 
-  - `/skill:grill-me`: Start a knowledge check session.
-  - `/skill:teach-mode`: Enter learning mode (explanations only).
-  - `/skill:caveman`: Enter token-saving minimalist mode.
-  - `/skill:handoff`: Generate a summary for the next agent.
-- **Global Instructions**: `bootstrap.md` is the source of truth for the agent's environment and style. It configures the agent for Windows usage and enforces a strict "no-paragraphs" rule to keep interactions fast and focused.
-- **Special Toggles**:
-  - **Teach Mode**: Exit with `Switch to Action Mode` or `/skills:teach-mode off`.
-  - **Caveman Mode**: Exit with `Exit Caveman Mode` or `/skill:caveman off`.
+After installing this package, run the helper script to install all external dependencies used by this setup.
 
-## 🤖 Other Agents
+```bash
+# macOS/Linux
+./scripts/install-extensions.sh
 
-While this repository is packaged for Pi, you can manually use these customizations in other agents (Cursor, Windsurf, Cline, Aider, etc.):
+# Windows PowerShell
+./scripts/install-extensions.ps1
+```
 
-### Using Skills
-Copy the content of the `SKILL.md` file from the desired skill directory and paste it into your agent's system prompt or a project-specific rules file (e.g., `.cursorrules`, `.windsurfrules`).
+Requirements: `pi`, `uv`, `npm` in `PATH`.
 
-### Using Global Instructions
-To use the Windows/PowerShell/Brevity persona:
-1. Open `prompts/bootstrap.md`.
-2. Copy the relevant sections.
-3. Paste them into your agent's "Custom Instructions" or "System Prompt" settings.
+### What the install script sets up
+
+#### Pi extensions/packages
+- `npm:pi-openplan`
+- `npm:pi-lmstudio`
+- `npm:pi-web-access`
+- `npm:pi-agent-browser-native`
+- `git:github.com/DietrichGebert/ponytail`
+
+#### Executables / CLIs
+- `agent-browser` (installed via `npm install -g agent-browser` if missing)
+- `graphify` (installed via `uv tool install graphifyy`, then `graphify install --platform pi`)
+
+## 🧩 What’s In This Repo
+
+### Local extension
+- `extensions/uv-global.ts`
+  - Enforces a uv-first Python workflow in Pi sessions.
+  - Rewrites bash calls to prefer:
+    - `uv run python ...`
+    - `uv pip ...`
+
+### Local skills
+- `skills/productivity/grill-me`
+  - Trigger ideas: `grill`, stress-test-plan requests.
+- `skills/productivity/caveman`
+  - `/skill:caveman` to activate, `/skill:caveman off` to exit.
+- `skills/productivity/handoff`
+  - Generates compact handoff summary for a new agent session.
+- `skills/productivity/groom-notes`
+  - Vault grooming workflow. Trigger: `/skill:groom-notes` or `/groom`.
+- `skills/productivity/quick-plan`
+  - Lightweight planning mode. `/qp` to plan, `/qpx` to execute.
+- `skills/education/teach-mode`
+  - Explain-only mode (no edits). Exit with `Switch to Action Mode`.
+
+### Prompts
+- `prompts/bootstrap.md`
+  - Base behavior and response style constraints.
+
+## 🧪 Quick Verification
+
+```bash
+# package installed
+pi list
+
+# required CLIs available
+agent-browser --version
+graphify --help
+
+# optional: agent-browser wrapper health check
+npm exec --yes --package pi-agent-browser-native@latest -- pi-agent-browser-doctor
+```
+
+## 🤖 Using Outside Pi
+
+You can still reuse these assets in other agents:
+- copy a skill’s `SKILL.md` into that agent’s rules/system prompt
+- copy `prompts/bootstrap.md` into custom instructions
 
 ---
 

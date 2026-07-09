@@ -9,10 +9,15 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
   throw 'uv not found in PATH'
 }
 
+if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
+  throw 'npm not found in PATH'
+}
+
 $packages = @(
   'npm:pi-openplan',
   'npm:pi-lmstudio',
   'npm:pi-web-access',
+  'npm:pi-agent-browser-native',
   'git:github.com/DietrichGebert/ponytail'
 )
 
@@ -26,6 +31,14 @@ foreach ($pkg in $packages) {
     Write-Host "install $pkg"
     pi install $pkg
   }
+}
+
+if (Get-Command agent-browser -ErrorAction SilentlyContinue) {
+  Write-Host 'skip  agent-browser'
+}
+else {
+  Write-Host 'install agent-browser'
+  npm install -g agent-browser
 }
 
 Write-Host 'install graphify cli'

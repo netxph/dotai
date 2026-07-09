@@ -11,10 +11,16 @@ if ! command -v uv >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm not found in PATH" >&2
+  exit 1
+fi
+
 packages=(
   "npm:pi-openplan"
   "npm:pi-lmstudio"
   "npm:pi-web-access"
+  "npm:pi-agent-browser-native"
   "git:github.com/DietrichGebert/ponytail"
 )
 
@@ -28,6 +34,13 @@ for pkg in "${packages[@]}"; do
     pi install "$pkg"
   fi
 done
+
+if command -v agent-browser >/dev/null 2>&1; then
+  echo "skip  agent-browser"
+else
+  echo "install agent-browser"
+  npm install -g agent-browser
+fi
 
 echo "install graphify cli"
 uv tool install graphifyy
