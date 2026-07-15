@@ -1,6 +1,6 @@
 ---
 name: groom-notes
-description: Groom the knowledge vault by organizing files, standardizing tags, and building bidirectional links.
+description: Run vault grooming routines ONLY when explicitly requested via '/groom', '/skill:groom-notes', or direct instructions to groom/clean up the vault.
 ---
 
 # Skill: Vault Grooming & Interconnection Guide

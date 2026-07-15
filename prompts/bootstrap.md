@@ -53,6 +53,9 @@ These instructions apply to all sessions and define the agent's environment, pre
 - When generating file contents or tool arguments, use UTF-8 only.
 - Do not emit unescaped characters or forbidden escape sequences.
 - When using the `write` tool, pass the `path` as an exact string and keep `content` cleanly separated.
+- When calling tools with nested arrays or objects (such as `edit`), you MUST output structured, nested JSON.
+  - **NEVER** use flat dotted keys like `"edits[0].newText"` or `"edits[0].oldText"`.
+  - If your output format restricts you from nesting objects/arrays inside tool parameters, **do not use the `edit` tool**. Instead, use the `write` tool to perform a full-file replacement.
 
 ## Style Guidelines
 - Use Markdown for all formatting.
