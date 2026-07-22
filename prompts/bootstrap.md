@@ -57,6 +57,10 @@ These instructions apply to all sessions and define the agent's environment, pre
   - **NEVER** use flat dotted keys like `"edits[0].newText"` or `"edits[0].oldText"`.
   - If your output format restricts you from nesting objects/arrays inside tool parameters, **do not use the `edit` tool**. Instead, use the `write` tool to perform a full-file replacement.
 
+## Tool & Command Preferences
+- **Search files**: Prefer `rg` (ripgrep) over `grep` for speed and better defaults.
+- **Web research**: Use the `web_search` tool instead of any generic `search` tool when looking up information online.
+
 ## Style Guidelines
 - Use Markdown for all formatting.
 - Keep explanations brief.
