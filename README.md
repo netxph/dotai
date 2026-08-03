@@ -28,7 +28,7 @@ After installing this package, run the helper script to install all external dep
 ./scripts/install-extensions.ps1
 ```
 
-Requirements: `pi`, `uv`, `npm` in `PATH`.
+Requirements: `pi`, `npm` in `PATH`.
 
 ### What the install script sets up
 
@@ -41,7 +41,6 @@ Requirements: `pi`, `uv`, `npm` in `PATH`.
 
 #### Executables / CLIs
 - `agent-browser` (installed via `npm install -g agent-browser` if missing)
-- `graphify` (installed via `uv tool install graphifyy`, then `graphify install --platform pi`)
 
 ## 🧩 What’s In This Repo
 
@@ -78,7 +77,6 @@ pi list
 
 # required CLIs available
 agent-browser --version
-graphify --help
 
 # optional: agent-browser wrapper health check
 npm exec --yes --package pi-agent-browser-native@latest -- pi-agent-browser-doctor

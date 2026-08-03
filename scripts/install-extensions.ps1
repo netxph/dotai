@@ -5,10 +5,6 @@ if (-not (Get-Command pi -ErrorAction SilentlyContinue)) {
   throw 'pi not found in PATH'
 }
 
-if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
-  throw 'uv not found in PATH'
-}
-
 if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
   throw 'npm not found in PATH'
 }
@@ -40,11 +36,5 @@ else {
   Write-Host 'install agent-browser'
   npm install -g agent-browser
 }
-
-Write-Host 'install graphify cli'
-uv tool install graphifyy
-
-Write-Host 'install graphify'
-graphify install --platform pi
 
 Write-Host 'done'

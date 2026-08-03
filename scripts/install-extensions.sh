@@ -6,11 +6,6 @@ if ! command -v pi >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v uv >/dev/null 2>&1; then
-  echo "uv not found in PATH" >&2
-  exit 1
-fi
-
 if ! command -v npm >/dev/null 2>&1; then
   echo "npm not found in PATH" >&2
   exit 1
@@ -41,11 +36,5 @@ else
   echo "install agent-browser"
   npm install -g agent-browser
 fi
-
-echo "install graphify cli"
-uv tool install graphifyy
-
-echo "install graphify"
-graphify install --platform pi
 
 echo "done"
