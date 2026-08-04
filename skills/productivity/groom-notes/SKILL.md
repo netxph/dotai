@@ -92,6 +92,12 @@ Ensure files live in their correct domains:
   - ensure MOCs contain curated links to relevant notes as applicable,
   - repair stale/broken MOC links,
   - add brief context under each MOC link where helpful.
+- Maintain the parent MOCs too:
+  - when a folder MOC is created or newly in scope, ensure its parent-domain MOC lists it,
+  - update `Atlas/000 Atlas.md` for new or newly relevant `Atlas/*/000 *.md` MOCs,
+  - update `Effort/000 Effort.md` for new or newly relevant `Effort/*/000 *.md` MOCs,
+  - preserve existing parent-MOC links and descriptions; add only missing or stale entries,
+  - do not groom unrelated parent-MOC content outside the required index relationship.
 
 ### 6. Markdown Formatting & Reference Footer
 - Normalize markdown formatting in-scope:
@@ -132,6 +138,7 @@ When `/skill:groom-notes` or `/groom` is executed:
    - For every folder containing in-scope files, create missing MOCs, update weak/outdated MOCs, and fix broken MOC links.
    - Use the naming convention `000 <folder name>.md` for MOCs.
    - Ensure each in-scope note links to its folder MOC via `up`.
+   - After updating folder MOCs, update the relevant parent MOC (`Atlas/000 Atlas.md` or `Effort/000 Effort.md`) so newly created or newly relevant child MOCs are discoverable.
 7. **Fix Markdown Formatting**
    - Normalize heading/list/code-fence formatting in-scope.
 8. **Add References Footer**
