@@ -10,10 +10,12 @@ if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
 }
 
 $packages = @(
-  'npm:pi-openplan',
+  'npm:@plannotator/pi-extension',
   'npm:pi-lmstudio',
   'npm:pi-web-access',
   'npm:pi-agent-browser-native',
+  'npm:pi-powerline-footer',
+  'npm:pi-codebase-memory-mcp',
   'git:github.com/DietrichGebert/ponytail'
 )
 
@@ -35,6 +37,18 @@ if (Get-Command agent-browser -ErrorAction SilentlyContinue) {
 else {
   Write-Host 'install agent-browser'
   npm install -g agent-browser
+}
+
+if (Get-Command codebase-memory-mcp -ErrorAction SilentlyContinue) {
+  Write-Host 'skip  codebase-memory-mcp'
+}
+else {
+  $installer = Join-Path $env:TEMP 'codebase-memory-mcp-install.ps1'
+  Write-Host 'install codebase-memory-mcp'
+  Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.ps1' -OutFile $installer
+  Unblock-File $installer
+  & $installer
+  Remove-Item $installer -Force
 }
 
 Write-Host 'done'

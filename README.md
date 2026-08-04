@@ -28,19 +28,22 @@ After installing this package, run the helper script to install all external dep
 ./scripts/install-extensions.ps1
 ```
 
-Requirements: `pi`, `npm` in `PATH`.
+Requirements: `pi` and `npm` in `PATH`; macOS/Linux also require `curl`.
 
 ### What the install script sets up
 
 #### Pi extensions/packages
-- `npm:pi-openplan`
+- `npm:@plannotator/pi-extension`
 - `npm:pi-lmstudio`
 - `npm:pi-web-access`
 - `npm:pi-agent-browser-native`
+- `npm:pi-powerline-footer`
+- `npm:pi-codebase-memory-mcp`
 - `git:github.com/DietrichGebert/ponytail`
 
 #### Executables / CLIs
 - `agent-browser` (installed via `npm install -g agent-browser` if missing)
+- `codebase-memory-mcp` (installed via the official installer if missing)
 
 ## 🧩 What’s In This Repo
 

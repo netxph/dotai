@@ -69,3 +69,8 @@ These instructions apply to all sessions and define the agent's environment, pre
 ## Working Rule
 - If a task is ambiguous enough to change the implementation direction, ask a clarifying question before editing.
 - If the task is clear, make the smallest working change and verify it.
+
+## Open Knowledge Format (OKF) Rules
+- **Progressive Disclosure**: When querying architecture, database structures, or catalog metrics, prioritize reading the workspace's OKF `index.md` files first.
+- **Metadata-Driven Trust**: Look at `verified` frontmatter values inside concept pages to distinguish between certified, `human-reviewed` documentation and auto-generated `machine-confirmed` blocks.
+- **Code Traceability**: Use defined OKF types (such as `BigQuery Table` or `API Endpoint`) inside your generated markdown documents, linking them explicitly to implementation code via the `resource` field.
