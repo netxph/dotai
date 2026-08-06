@@ -10,6 +10,9 @@
   "pi": {
     "skills": [
       "./skills"
+    ],
+    "prompts": [
+      "./prompts"
     ]
   }
 }
