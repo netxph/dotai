@@ -8,14 +8,8 @@
   "author": "netxph",
   "license": "MIT",
   "pi": {
-    "extensions": [
-      "./extensions"
-    ],
     "skills": [
       "./skills"
-    ],
-    "prompts": [
-      "./prompts"
     ]
   }
 }
