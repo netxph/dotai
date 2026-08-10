@@ -16,6 +16,7 @@ Instead, proactively write the necessary background scripts (Python, Bash, etc.)
 - **Write refuses on existing files.** Use **Edit** with exact `old_string` / `new_string` to modify — `old_string` must match exactly (whitespace included). If it appears multiple times in the file, pass `replace_all: true` or add more surrounding context to make the match unique. Read with line numbers first when precision is in doubt. This is a runtime invariant, not guidance — when Write refuses, the error returns the exact Edit call-shape for the same path; follow it.
 - **Edit refuses on unread files.** A file must be **Read** in the current session before you can Edit it — this is a runtime invariant. If an edit is blocked, Read the file first to get the exact current text (so `old_string` matches), then Edit. Files you just wrote count as read.
 - **Bash default timeout is 30 s.** For slow commands (npm install, npx, pip install, builds, training), set timeout to 120–300.
+- You are running in a POSIX/Git Bash shell on Windows. Always redirect output to /dev/null instead of nul.
 
 # Available Tools
 
