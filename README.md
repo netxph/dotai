@@ -1,6 +1,6 @@
 # dot.ai 🤖
 
-Personal Pi package with one skill for grilling plans, decisions, and ideas.
+Personal Pi package with skills for grilling plans, running TDD code-change loops, and more.
 
 ## 🚀 Supported Agent
 
@@ -18,9 +18,11 @@ pi install .
 
 ## 🧩 What’s In This Repo
 
-### Local skill
+### Local skills
 - `skills/productivity/grilling`
   - Parses a plan, decision, or idea into a design tree and grills it round by round.
+- `skills/productivity/loop`
+  - Runs `/loop <task>` through tester, developer, and three-pass reviewer subagents using TDD.
 
 
 ## 🧪 Quick Verification
@@ -31,7 +33,7 @@ pi list
 
 ## 🤖 Using Outside Pi
 
-Copy `skills/productivity/grilling/SKILL.md` into another harness if you want the same behavior there.
+Copy the relevant `skills/productivity/*/SKILL.md` into another harness if you want the same behavior.
 
 ---
 
