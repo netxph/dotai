@@ -1,6 +1,6 @@
 ---
 name: loop
-description: Run /loop <task> as a subagent-driven, test-driven code-change loop with developer, tester, and three-pass reviewer gates.
+description: Run /loop <task> as a subagent-driven, test-driven code-change loop with a user checkpoint and developer, tester, and three-pass reviewer gates.
 ---
 
 # Loop Engineering
@@ -15,6 +15,16 @@ You are the orchestrator. Do not implement the change yourself. Spawn subagents 
 - **developer** — implements the requested code change. Before handing off, it must run the relevant tests, lint, build/type checks, and available security/vulnerability checks, and fix failures it finds. It reports commands and results.
 - **reviewer** — independently reviews the resulting diff for correctness, scope, regressions, maintainability, test quality, and security. It reports findings and does not make code changes.
 
+## Parallelism
+
+Keep stage dependencies sequential, but run independent work concurrently whenever it is safe:
+
+- Use the harness' parallel fan-out (`runs.all`) for independent agents or review passes.
+- Run the three review passes in parallel against the same verified diff; they are read-only and must each be independent.
+- Within a quality or verification stage, run independent checks in parallel when they do not share mutable state; otherwise run them sequentially.
+- Never run two writers against the same worktree. Keep developer changes serialized, and wait for all parallel checks/reviews before deciding the next stage.
+- Include each parallel result in the stage summary and treat any failure as blocking.
+
 ## Workflow
 
 Run these stages in order. After each stage, emit a concise summary with the agent, action, commands, and result.
@@ -23,24 +33,30 @@ Run these stages in order. After each stage, emit a concise summary with the age
    - Run the existing relevant test suite before changing code.
    - If baseline tests fail, hand the failure to **developer** to fix the test or underlying issue, then return to **tester** to run the baseline again.
    - Do not write feature tests until the baseline is passing.
-2. **Red (tester)**
+2. **User checkpoint (orchestrator, mandatory)**
+   - Once the baseline is passing, create a concise change summary and an explicit implementation task describing what will be changed, files or areas likely affected, acceptance criteria, and the next test-driven steps.
+   - Include a Markdown task checklist (`- [ ]`) covering every planned execution task, with the completed baseline marked `- [x]`. This checklist is the execution tracker: cross out each item by changing it to `- [x]` only after that task is actually complete, and add any newly discovered required task before continuing.
+   - Present the summary, task, and checklist to the user, then stop. Do not write feature tests, modify production code, or spawn further stages during this turn.
+   - Wait for the user to manually review the checkpoint. Resume execution only when the user gives `/loopx` (including any feedback supplied with it); otherwise remain paused.
+   - On `/loopx`, incorporate the user's feedback into the task, preserve the original requirements, and continue at **Red**.
+3. **Red (tester)**
    - Write the smallest tests that express the requested behavior.
    - Run them and confirm the new test fails for the expected reason.
    - Hand the failing test and failure output to **developer**.
-3. **Green and quality gates (developer)**
+4. **Green and quality gates (developer)**
    - Implement the minimum change that satisfies the task and tests.
    - Run relevant tests, lint, build/type checks, and available dependency/security vulnerability checks.
    - Fix all failures and security findings before handing back to **tester**.
-4. **Verification (tester)**
+5. **Verification (tester)**
    - Run the feature and regression tests.
-   - If anything fails, hand the exact failure to **developer** and return to stage 3.
+   - If anything fails, hand the exact failure to **developer** and return to stage 4.
    - If all tests pass, hand the diff to **reviewer**.
-5. **Review (reviewer, exactly 3 iterations)**
-   - Perform three independent review passes. Each pass must inspect the current diff and report either findings or `clean`.
-   - If any pass requests a code change, stop the review cycle, hand the findings to **developer**, and restart at stage 3. After the fix is verified, restart all three review iterations; only three clean passes complete the workflow.
+6. **Review (reviewer, exactly 3 iterations)**
+   - Fan out the three independent review passes in parallel with `runs.all`. Each pass must inspect the current diff and report either findings or `clean`.
+   - If any pass requests a code change, stop the review cycle, hand the findings to **developer**, and restart at stage 4. After the fix is verified, restart all three review iterations; only three clean passes complete the workflow.
    - Do not skip, combine, or count a review pass performed on an outdated diff.
 
-A handoff must include: current status, files changed, commands run, output or failure summary, remaining concerns, and the next required stage. Keep these summaries concise.
+A handoff must include: current status, the current task checklist with completed items crossed out as `- [x]`, files changed, commands run, output or failure summary, remaining concerns, and the next required stage. Keep these summaries concise.
 
 ## Hard stops
 
