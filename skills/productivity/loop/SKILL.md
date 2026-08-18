@@ -29,6 +29,13 @@ You are the orchestrator. Do not implement the change yourself. Spawn subagents 
 - Present concise options when a choice is needed, recommend one, and cite the evidence for each recommendation using relevant file paths and line ranges, graph symbols/traces, test output, or external sources when applicable.
 - Do not treat the recommendation as approval. Wait for the user's decision, then apply it only after `/loopx`.
 
+## Subagent lifecycle
+
+- A stage is not complete until every child it started has returned a result; await all `runs.run` and `runs.all` handles before advancing, pausing, or reporting success.
+- Do not leave detached or background children running across a checkpoint, hard stop, or completed workflow. Before pausing or finishing, inspect the subagent fleet/status and stop or interrupt any stragglers.
+- A parallel wave is complete only after all children in the wave have returned; one successful child does not cancel the others or make the stage complete.
+- At final completion, verify there are no active workflow agents. If cleanup fails, report the active run IDs and cleanup failure instead of declaring success.
+
 ## Parallelism
 
 Keep stage dependencies sequential, but run independent work concurrently whenever it is safe:
@@ -85,7 +92,7 @@ Stop immediately if execution requires any deviation from or change to the initi
 
 - stop all subagents and make no further changes;
 - explain the proposed deviation or change, present the available options and recommendation with supporting citations, and ask focused questions for the user's instructions or approval;
-- wait for the user's response; do not resume automatically;
+- wait for the user's response; do not resume automatically; verify and clean up any remaining child runs before waiting;
 - after the user accepts or revises the plan, resume only when `/loopx` is given, incorporating the accepted changes into the task and checklist.
 
 Track attempts per distinct issue (test failure, build/lint failure, security finding, or review finding). A retry means a concrete developer/tester action followed by the relevant check. After the third unsuccessful attempt for the same issue:
@@ -101,6 +108,7 @@ Never bypass a failed check, waive a security finding, or declare success becaus
 
 End with a concise summary of:
 
+- confirmation that all subagent workflows returned and no active workflow agents remain;
 - files changed;
 - tests, lint, build, and security checks that passed;
 - the three clean review iterations;
