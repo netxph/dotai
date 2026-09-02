@@ -53,8 +53,11 @@ sources:
 
 #### Body
 * Attribute specific claims with footnotes keyed to source ids: `... claim.[^id]` then `[^id]: <Source title>` at the bottom. Group citations after a developed paragraph or tightly related claim cluster; do not let footnotes interrupt the article's explanation. Never use positional citation lists.
-* Follow the chapter blueprint: title, abstract/core premise, `##`/`###` section breakdown, key takeaways/conclusion.
+* Follow the chapter blueprint: title, abstract/core premise, unnumbered `##`/`###` section breakdown, key takeaways/conclusion.
+* Do not number headings; use descriptive heading text such as `## How It Works`, not `## 1. How It Works`.
+* Do not use horizontal-rule separators such as `---` in the article body; Pandoc can misinterpret them. The required YAML frontmatter delimiters remain the only exception.
 * End with `## Further Reading`: bulleted Markdown links (with one-line note each) to primary sources and related material beyond what was cited inline.
+* Use Mermaid for diagrams: write diagrams as fenced `mermaid` code blocks (for example, `flowchart`, `sequenceDiagram`, or `xychart-beta`) rather than ASCII art or image-based diagrams. Include a short prose introduction and, where useful, a brief interpretation after each diagram.
 
 ---
 
@@ -83,4 +86,6 @@ Before producing or saving the output, verify:
 * Are primary sources cited accurately with Markdown links?
 * Does the document end with a `## Further Reading` link list?
 * Is conceptual theory explained in well-structured paragraphs?
+* Are headings unnumbered and free of manual numeric prefixes?
+* Does the article body avoid `---` horizontal-rule separators?
 * Are all instructions, workflows, and actionable steps rendered in short, scannable bullet points?

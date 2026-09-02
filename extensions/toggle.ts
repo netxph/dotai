@@ -144,7 +144,8 @@ export default async function toggleExtension(pi: ExtensionAPI) {
 				| { kind: "resource"; group: ResourceGroup; resource: ManagedResource; flattened: boolean };
 			const next = await ctx.ui.custom<Set<string>>((tui, theme, _keybindings, done) => {
 				const search = new Input();
-				search.focused = true;
+				search.focused = false;
+				let searchMode = false;
 				let selectedIndex = 0;
 
 				const visibleRows = (): ToggleRow[] => {
@@ -180,7 +181,8 @@ export default async function toggleExtension(pi: ExtensionAPI) {
 						selectedIndex = Math.min(selectedIndex, Math.max(0, rows.length - 1));
 						const start = Math.max(0, Math.min(selectedIndex - 5, rows.length - 10));
 						const lines = [theme.fg("accent", theme.bold("Skills & Prompts"))];
-						lines.push(`Search: ${search.render(Math.max(1, width - 8))[0] ?? ""}`, "");
+						const searchLabel = searchMode ? "Search (typing): " : "Search: ";
+						lines.push(`${searchLabel}${search.render(Math.max(1, width - searchLabel.length))[0] ?? ""}`, "");
 						for (let index = start; index < Math.min(start + 10, rows.length); index++) {
 							const row = rows[index];
 							const prefix = index === selectedIndex ? theme.fg("accent", "→") : " ";
@@ -204,7 +206,9 @@ export default async function toggleExtension(pi: ExtensionAPI) {
 						}
 						if (rows.length === 0) lines.push(theme.fg("warning", "No matching resources"));
 						lines.push("", truncateToWidth(
-							theme.fg("dim", "↑↓ navigate • space toggle • alt+a all • alt+n none • esc apply"),
+							theme.fg("dim", searchMode
+								? "type to filter • tab navigate"
+								: "/ search • ↑↓ or j/k navigate • space toggle • alt+a all • alt+n none • esc apply"),
 							width,
 						));
 						return lines;
@@ -214,22 +218,30 @@ export default async function toggleExtension(pi: ExtensionAPI) {
 					},
 					handleInput(data: string) {
 						const rows = visibleRows();
-						if (matchesKey(data, "escape") || matchesKey(data, "ctrl+c")) {
+						if (searchMode) {
+							if (matchesKey(data, "tab")) {
+								searchMode = false;
+								search.focused = false;
+							} else {
+								search.handleInput(data);
+								selectedIndex = 0;
+							}
+						} else if (matchesKey(data, "/")) {
+							searchMode = true;
+							search.focused = true;
+						} else if (matchesKey(data, "escape") || matchesKey(data, "ctrl+c")) {
 							done(draft);
 						} else if (matchesKey(data, "alt+a")) {
 							setAllSelected(draft, catalog, true);
 						} else if (matchesKey(data, "alt+n")) {
 							setAllSelected(draft, catalog, false);
-						} else if (matchesKey(data, "up")) {
+						} else if (matchesKey(data, "up") || matchesKey(data, "k")) {
 							selectedIndex = Math.max(0, selectedIndex - 1);
-						} else if (matchesKey(data, "down")) {
+						} else if (matchesKey(data, "down") || matchesKey(data, "j")) {
 							selectedIndex = Math.max(0, Math.min(rows.length - 1, selectedIndex + 1));
 						} else if (matchesKey(data, "space") && rows[selectedIndex]) {
 							const row = rows[selectedIndex];
 							toggleSelection(draft, row.kind === "group" ? row.group.resources : [row.resource]);
-						} else {
-							search.handleInput(data);
-							selectedIndex = 0;
 						}
 						tui.requestRender();
 					},
