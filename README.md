@@ -1,12 +1,14 @@
 # dot.ai 🤖
 
-Personal [Pi](https://github.com/earendil-works/pi-coding-agent) package with productivity skills and an ephemeral `/toggle` picker.
+Personal [Pi](https://github.com/earendil-works/pi-coding-agent) package with productivity skills, subagent profiles, and an ephemeral `/toggle` picker.
 
 ## Install
 
 ```bash
 pi install .
 ```
+
+On install, the package's profile-sync extension copies the profiles to `~/.pi/agent/agents/` (or `$PI_CODING_AGENT_DIR/agents/`) on the next Pi startup so the `pi-subagents` extension can load them globally. npm/git installs also run the postinstall sync immediately.
 
 Or from GitHub:
 
@@ -19,6 +21,7 @@ pi install git:github.com/netxph/dotai
 - `skills/productivity/grilling` — grills plans, decisions, and ideas.
 - `skills/productivity/loop` — runs TDD code-change loops with tester, developer, and reviewer subagents.
 - `skills/productivity/research` — researches topics and produces long-form, source-backed writing.
+- `agents/` — pi-subagent profiles installed globally by `pi install .`.
 - `extensions/toggle.ts` — enables or disables global skills and prompt templates for the current Pi process.
 
 ## Use `/toggle`

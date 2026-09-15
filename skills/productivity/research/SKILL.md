@@ -25,6 +25,7 @@ Research a user-specified topic using primary sources and synthesize the finding
 ### Step 2: Write an article worth reading
 The deliverable is a self-contained article, not a search summary or annotated link list. The reader should be able to understand the topic without opening a source link. Unless the user explicitly asks for a brief overview, do not answer a broad research request in one or two sentences.
 
+* **Lead with a plain-language orientation**: Make the first section or opening paragraph a substantial, easy-to-parse summary for a non-specialist. Explain what the topic is, why it matters, and the central idea in everyday language before introducing jargon, caveats, history, or technical detail. Define unavoidable terms when they first appear. This opening should give the reader a usable mental model, not merely repeat the title or provide a one-sentence abstract.
 * **Depth target**: For a broad or general-interest topic, write roughly 1,500–2,500 words. For a narrow topic, write roughly 800–1,500 words. Adjust when the topic genuinely requires less, but never use brevity as a default.
 * **Section substance**: Give each major section at least two developed paragraphs unless it is explicitly a list of facts, rules, or steps. Explain causes, examples, implications, and relationships—not just definitions.
 * **Synthesis**: Compare sources, resolve differences where possible, state uncertainty, and connect facts into a coherent narrative. Do not merely paraphrase source titles or place a citation after an unsupported assertion.
@@ -78,6 +79,8 @@ Apply these strict stylistic constraints across the entire piece:
 ### Step 5: Final Verification Checklist
 Before producing or saving the output, verify:
 * Does this read as a self-contained article rather than a short answer with citations attached?
+* Does the opening section or paragraph explain what the topic means, why it matters, and its central idea in clear layman's terms before technical detail begins?
+* Is the opening substantial and easy to scan, rather than a vague abstract, title restatement, or jargon-heavy summary?
 * Does it meet the proportional depth target, with developed explanations and concrete examples?
 * Did I actually inspect the source content and synthesize it, rather than rely on search-result snippets or links?
 * Could a reader answer the obvious follow-up questions without clicking through?

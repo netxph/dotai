@@ -13,11 +13,13 @@
     "@earendil-works/pi-tui": "*"
   },
   "scripts": {
-    "test": "node --test tests/*.test.ts"
+    "test": "node --test tests/*.test.ts",
+    "postinstall": "node scripts/install-agents.mjs"
   },
   "pi": {
     "extensions": [
-      "./extensions/toggle.ts"
+      "./extensions/toggle.ts",
+      "./extensions/install-agents.ts"
     ],
     "skills": [
       "./skills"
