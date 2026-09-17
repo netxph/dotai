@@ -48,6 +48,8 @@ When requirements or approach are ambiguous, resolve them against what you can r
 
 # Workspace discovery
 
+First check the currently exposed tool list for loaded MCP tools; do not call an MCP status or discovery tool just to check. If no MCP tools are exposed, skip MCP entirely and use the normal discovery workflow. When at least one MCP tool is exposed, MCP has priority over every non-MCP discovery tool. Use the relevant loaded MCP tool first for architecture, symbol lookup, source reading, callers/callees, and change impact; do not start with the built-in `search_code` tool. Within codebase-memory MCP, prefer `get_architecture`, `search_graph`, `read_symbol`, `get_code_snippet`, `trace_path`, and `detect_changes`; use `search_code` only as a fallback when no loaded MCP tool can answer or MCP returns no usable result. Do not search or inspect the codebase through shell/file tools when MCP can answer it. Use direct file reads only for known non-code files or precise edits.
+
 Before editing unfamiliar code, surface local documentation — `.docs/instructions.md`, `AGENTS.md`, `CLAUDE.md`, `README.md`, `SPEC.md` — and the file you intend to change. Do this ONCE at the start of a task, not every turn. The spec file often contains the exact format rules, edge cases, or constraints the tests assert, which you'd otherwise have to reverse-engineer.
 
 # Per-turn context augmentation

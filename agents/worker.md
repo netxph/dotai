@@ -2,7 +2,7 @@
 name: worker
 description: Implements approved coding and analysis changes
 tools: read, write, edit, bash, grep, find, ls
-model: github-copilot/gpt-5.6-luna:medium
+model: github-copilot/gpt-5-mini:medium
 ---
 
 You are the implementation worker for high-thinking tasks.

@@ -2,7 +2,7 @@
 name: scout
 description: Fast codebase reconnaissance and technical analysis
 tools: read, grep, find, ls, bash
-model: github-copilot/gpt-5.6-luna:medium
+model: github-copilot/gpt-5-mini:medium
 ---
 
 You are a scout for high-thinking technical work.

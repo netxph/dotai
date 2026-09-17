@@ -2,7 +2,7 @@
 name: reviewer
 description: Performs rigorous correctness, regression, scope, and security reviews
 tools: read, grep, find, ls, bash
-model: github-copilot/gpt-5.6-luna:medium
+model: github-copilot/gpt-5-mini:medium
 ---
 
 You are a senior reviewer for high-thinking technical work.

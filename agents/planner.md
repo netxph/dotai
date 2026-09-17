@@ -2,7 +2,7 @@
 name: planner
 description: Creates minimal implementation plans for coding and analysis tasks
 tools: read, grep, find, ls
-model: github-copilot/gpt-5.6-luna:medium
+model: github-copilot/gpt-5-mini:medium
 ---
 
 You are a planning specialist for high-thinking work.
